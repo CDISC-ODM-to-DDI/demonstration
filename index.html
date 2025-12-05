@@ -19,10 +19,10 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
       <header class="inner">
-        <a id="forkme_banner" href="https://github.com/MetadataTransform/ddi-xslt">View on GitHub</a>
+        <a id="forkme_banner" href="https://github.com/CDISC-ODM-to-DDI">View on GitHub</a>
 
-        <h1 id="project_title"><a href="https://metadatatransform.github.io/ddi-xslt/">ddi-xslt</a></h1>
-        <h2 id="project_tagline">XSLT transformations for DDI XML-files to other formats</h2>
+        <h1 id="project_title">CDISC-ODM XML to DDI</a></h1>
+        <h2 id="project_tagline">XSLT transformations for CDISC ODM XML-files to DDI</h2>
       </header>
   </div>
 
@@ -60,7 +60,7 @@
           xsltList: [
             {
               label: 'REDCap CDISC ODM-XML to DDI 2.5',
-              path: './xsl/redcapodm_to_ddic_2_5_all.xsl'
+              path: './xsl/redcap/DDI_Codebook/redcapodm_to_ddic_2_5_all.xsl'
             },
           ],
           xmlList:[
@@ -69,8 +69,29 @@
               path: null
             },
             {
-              label: 'REDCap CDISC ODM-XML',
-              path: './xml/VGEVariabilityV3_2025-12-04_0455.REDCap.xml'
+              label: 'REDCap - Basic Demography',
+              path: './xml/examples/BasicDemography_2025-12-04_1400.REDCap.xml'
+            },
+            {
+              label: 'REDCap - Classic Database',
+              path: './xml/examples/ClassicDatabase_2025-12-04_1358.REDCap.xml'
+            },
+            {
+              label: 'REDCap - Longitudinal Database',
+              path: './xml/examples/LongitudinalDatabase_2025-12-04_1359.REDCap.xml'
+            },
+            {
+              label: 'REDCap - Single Survey',
+              path: './xml/examples/SingleSurvey_2025-12-04_1359.REDCap.xml'
+            }, 
+ 
+            {
+              label: 'REDCap - Multiple Surveys - Classic',
+              path: './xml/examples/MultipleSurveysClass_2025-12-04_1400.REDCap.xml'
+            },
+            {
+              label: 'REDCap - Multiple Surveys - Longitudinal',
+              path: './xml/examples/MultipleSurveysLongi_2025-12-04_1400.REDCap.xml'
             },
           ],
           selectedXslt: null,
