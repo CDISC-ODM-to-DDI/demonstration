@@ -34,8 +34,14 @@
           <label for="xml_examples">Load example XML: </label>
           <select id="xml_examples" @change="onXmlChange($event)" v-model="selectedXml">
             <option v-for="o in xmlList" v-bind:value="o.path">{{ o.label }}</option>
-          </select>
+          </select><br/>
+          Or select your XML file <input type="file" id="xmlFileInput" @change="localXmlFileLoad($event)" accept=".xml"/><br/>(big projects might take a while)</fieldset>
+          
+
+
           <textarea id="input" v-model="input" rows="20" spellcheck="false" :ondrop="onDrop" placeholder="Drop/paste DDI-file here or select a example from the list"></textarea>
+        
+        
         </fieldset>
 
         <fieldset>
@@ -46,8 +52,11 @@
         </fieldset>
 
         <button id="transform" class="button" v-on:click="transform" :disabled="transformationEnabled">Transform XML</button>
+
+
         <fieldset>
           <legend for="result">Result</legend>
+          <button id="save" class="button" @click="saveXmlFile('ddi-out.xml')">Save result XML</button>
           <textarea id="result" v-model="result" rows="30" spellcheck="false" placeholder="XSLT trasformation result"></textarea>
         </fieldset>
     </section>
@@ -147,6 +156,42 @@
             this.xslt = data;
             this.transform();
           });
+        },
+        localXmlFileLoad(event){
+            const file = event.target.files[0]
+            //console.log(file)
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            var ref = this;
+            reader.onload = (e) => {
+                ref.input = e.target.result;
+                ref.transform()
+            }
+            
+            reader.readAsText(file)
+            
+        },
+        saveXmlFile(fileName){
+            var fileAsBlob = new Blob([this.result], { type: 'application/xml' })
+
+            var downloadLink = document.createElement("a")
+            downloadLink.download = fileName
+            downloadLink.innerHTML = "Download File"
+            if (window.webkitURL != null) {
+              // Chrome allows the link to be clicked without actually adding it to the DOM.
+              downloadLink.href = window.webkitURL.createObjectURL(fileAsBlob)
+            } else {
+              // Firefox requires the link to be added to the DOM before it can be clicked.
+              downloadLink.href = window.URL.createObjectURL(fileAsBlob)
+              downloadLink.onclick = destroyClickedElement
+              downloadLink.style.display = "none"
+              document.body.appendChild(downloadLink)
+            }
+
+            downloadLink.click();
         },
         transform(){
           this.result = SaxonJS.XPath.evaluate(`transform(map { 'source-node' : parse-xml($xml), 'stylesheet-text' : $xslt, 'delivery-format' : 'serialized' })?output`, null, { 
